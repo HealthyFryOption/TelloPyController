@@ -48,6 +48,7 @@ try:
             record = Thread(target=videoRecorder)
             record.start()
             is_record = True
+            
         elif not drone_obj.videoCapState:
             is_record = False
         
@@ -55,7 +56,7 @@ try:
         controls.keyboard_controls(drone_obj, tracking_prop)
         
         # Output image into CV Window and get additional outputs
-        dictValues = cv_obj.update_frame(drone_obj.current_frame, drone_obj.state)
+        dictValues = cv_obj.update_frame(drone_obj.current_frame, drone_obj.state, drone_obj.get_battery())
         
         if drone_obj.state in ["facetrack", "handtrack"]:
             box = dictValues["bBox"]

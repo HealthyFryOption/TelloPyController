@@ -43,7 +43,7 @@ class Drone:
     def takeoff_drone(self):
         self.drone.takeoff()
     def get_battery(self):
-        print(self.drone.get_battery())
+        return self.drone.get_battery()
     def flip_drone(self, direction):
         self.drone.flip(direction)
     

@@ -17,7 +17,7 @@ class DrawComputer:
         self.height = 500
 
     # Take frame image and manipulate it if needed
-    def update_frame(self, frame, droneState):
+    def update_frame(self, frame, droneState, droneBattery):
         dictValue = {}
         
         start = time.perf_counter()
@@ -40,6 +40,7 @@ class DrawComputer:
             fps = 1 / totalTime
             cv.putText(frame, f'FPS: {int(fps)}', (20,70), cv.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
         
+        cv.putText(frame, f'Battery: {int(fps)}', (100,70), cv.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
         cv.imshow("Missile Cam", frame)
         
         return dictValue
