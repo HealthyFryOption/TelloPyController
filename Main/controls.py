@@ -196,6 +196,7 @@ def gesture_movement(drone, gestureLabel):
         elif gestureLabel == "PEACE":
             drone.rc_controls[0] = 0
             drone.rc_controls[1] = 0
+            
             global pic_previous_time
             now = perf_counter()
             # Take picture every 15 seconds a peace gesture is detected
@@ -205,15 +206,19 @@ def gesture_movement(drone, gestureLabel):
 
         elif gestureLabel == "LEFT":
             drone.rc_controls[0]  =  gesture_movements["left"]
+            drone.rc_controls[1] = 0
 
         elif gestureLabel == "RIGHT":
             drone.rc_controls[0]  =  gesture_movements["right"]
+            drone.rc_controls[1] = 0
 
         elif gestureLabel == "FIST":
             drone.rc_controls[1] = gesture_movements["front"]
+            drone.rc_controls[0] = 0
 
         elif gestureLabel == "PALM":
             drone.rc_controls[1] =  gesture_movements["back"]
+            drone.rc_controls[0] = 0
         
         # If the detection dosen't break through probability threshold and is set to UNKNOWN, drone remains stable
         elif gestureLabel == "UNKNOWN":
