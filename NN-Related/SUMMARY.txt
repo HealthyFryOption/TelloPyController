@@ -1,4 +1,4 @@
-AFollowingo the current NeuralNet_DEEP CNN architecture, its DRONE_LABELS classes, and makeTrainingData.ipynb, please add a folder named 'handCapture' in this directory that subsequently contains 6 folders with the names of the gestures:
+Following the current NeuralNet_DEEP CNN architecture, its DRONE_LABELS classes, and makeTrainingData.ipynb, please add a folder named 'handCapture' in this directory that subsequently contains 6 folders with the names of the gestures:
 
 1) openPalm
 2) fist
