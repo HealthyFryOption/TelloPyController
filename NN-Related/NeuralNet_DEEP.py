@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-# Width and Height is 130 pixels
+# Width and Height is 140 pixels
 IMG_WIDTH = 140
 IMG_HEIGHT = 140
 CLASSES_COUNT = 6
