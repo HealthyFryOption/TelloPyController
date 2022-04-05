@@ -1,13 +1,13 @@
-According to the current NeuralNet_DEEP CNN architecture, please add a folder named 'handCapture' in this directory, which subsequently should contain 6 gesture folders:
+AFollowingo the current NeuralNet_DEEP CNN architecture, its DRONE_LABELS classes, and makeTrainingData.ipynb, please add a folder named 'handCapture' in this directory that subsequently contains 6 folders with the names of the gestures:
 
-1) Palm
-2) Fist
-3) Peace
-4) Right 
-5) Left 
-6) Thumbs Up
+1) openPalm
+2) fist
+3) peace
+4) right 
+5) left 
+6) thumbsUp
 
-a) Use testModelTrack.py which connects to a webcam. Through hand tracking by pressing 'c', take custom pictures of a gesture. View that file for more info. 
+a) Use testModelTrack.py to connects to a webcam and Through hand tracking, by pressing 'c', take custom pictures of a gesture. View that file for more info. 
    NOTE: YOU CAN SKIP a) IF YOU ALREADY HAVE A DATASET READY
 
 b) After collecting enough dataset images, run makeTrainingData.ipynb to create a .npy file containing the data of all images.
