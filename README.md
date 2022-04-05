@@ -23,7 +23,17 @@ This directory contains all the necessary Python files needed for you to run a c
 A few notes to take into account:
 
 * You are needed to only ever needed to run main.py
-* Computer_Vision.py majorly handles the drawing or classifications of frames/images, and subsequently provide necessary boundary box information. controls.py then takes in given information, especially boundary boxes around object detected to control the drone's movement. 
+* Computer_Vision.py majorly handles the drawing or classifications of frames/images, and subsequently provide necessary information. controls.py then takes in given information, such as boundary boxes around object detected or label of gesture detected to control the drone's movement. 
 * The directory **GestureClassifier** is used to store the Convolutional Neural Network architecture written in PyTorch and a trained model's saved parameters, preferably in type .pth . We have not provided the parameters as it is about the storage space limit of 25mb. Thus, we encourage you to build your own via NN-Related!
 
+For more information as to how the code works, and where to change certain values, please refer to the docstrings or comments available.
 
+## NN-Related
+This directory contails all the necessary Python files needed for you to *create* your own Convolutional Neural Network architecture in PyTorch, and train it to produce your own .pth file to be placed inside Main.GestureClassifier.
+
+**For more information on how to use it, please check SUMMARY.txt available inside it. You can also refer to the readily prepared docstrings documentation for more information**
+
+## DISCLAIMER
+If you plan to use this repository for your own drone's test run, make sure that there are little to no WiFi-interference which may cause bad connection between the device running the program and your drone. This will ensue corruption of frame captured from the drone which may cause issues in certain modes. Furthermore, make sure the climate around is not too windy so that a smooth flight can be taken.
+
+**The authors and contributors of this repository is NOT liable for any damage that may incur**
