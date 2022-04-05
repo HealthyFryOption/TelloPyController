@@ -37,6 +37,6 @@ This directory contails all the necessary Python files needed for you to *create
 **For more information on how to use it, please check SUMMARY.txt available inside it. You can also refer to the readily prepared docstrings documentation for more information**
 
 ## DISCLAIMER
-If you plan to use this repository for your own drone's test run, make sure that there are little to no WiFi-interference which may cause bad connection between the device running the program and your drone. This will ensue corruption of frame captured from the drone which may cause issues in certain modes. Furthermore, make sure the climate around is not too windy so that a smooth flight can be taken.
+If you plan to use this repository for your own drone's test run, make sure that there are little to no WiFi-interference as it may cause bad connection between the device running the program and your drone. This will then ensue corruption of frame captured from the drone which could cause issues in certain modes. Furthermore, make sure the climate around is not too windy so that a smooth flight can be taken.
 
-**The authors and contributors of this repository is NOT liable for ANY kinds of damages to that may incur. Run at your own discretion.**
+**The authors and contributors of this repository is NOT liable for ANY kinds of damages that may incur. Run at your own discretion.**
