@@ -193,11 +193,6 @@ def gesture_movement(drone, gestureLabel):
             drone.rc_controls[0] = 0
             drone.rc_controls[1] = 0
 
-        #elif gestureLabel == "OK":
-            #drone.land_drone()
-            #drone.rc_controls[0] = 0
-            #drone.rc_controls[1] = 0
-
         elif gestureLabel == "PEACE":
             drone.rc_controls[0] = 0
             drone.rc_controls[1] = 0
