@@ -1,4 +1,4 @@
-According to the current NeuralNet_DEEP CNN architecture, handCapture directory should contain 6 gesture folders:
+According to the current NeuralNet_DEEP CNN architecture, please add a handCapture folder in this directory, which subsequently should contain 6 gesture folders:
 
 1) Palm
 2) Fist
