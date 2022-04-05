@@ -1,4 +1,4 @@
-# Tello Py Controller
+# TelloPyController
 
 ## Introduction
 Tello Py Controller can be used to control your Tello Ryze drone in **4 modes**:
