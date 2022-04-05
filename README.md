@@ -32,7 +32,7 @@ A few notes to take into account:
 For more information as to how the code works, and where to customized certain values, please refer to the docstrings or comments available.
 
 ## NN-Related
-This directory contails all the necessary Python files needed for you to *create* your own Convolutional Neural Network architecture in PyTorch, and train it to produce your own .pth file to be placed inside Main.GestureClassifier.
+This directory contails all the necessary Python files needed for you to *create* your .pth file to be placed inside Main.GestureClassifier. You can either use the already provided Convolutional Neural Network architecture in PyTorch and train it, or customize it to your own configurations.
 
 **For more information on how to use it, please check SUMMARY.txt available inside it. You can also refer to the readily prepared docstrings documentation for more information**
 
