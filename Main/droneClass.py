@@ -1,19 +1,18 @@
+'''
+    Contains class Drone whose object help send all drone controls and maintain connection to the Tello Drone.
+    State: [keycontrols, facetrack, handtrack, gesture]
+'''
+
 from djitellopy import tello
-from cv2 import imwrite, VideoWriter, VideoWriter_fourcc
+from cv2 import imwrite
 import os
 from datetime import datetime
-from time import sleep
-
-
 
 class Drone:
-    '''
-        DRONE OBJECT THAT CONTAINS ALL DRONE CONTROLS AND INITIALIZATION OF CONNECTION
-        STATE： [keycontrols, facetrack]
-    '''
     
     def __init__(self):
         # ======== Initialise Drone ============
+
         # Drone object
         self.drone = tello.Tello()
         self.drone.connect()
@@ -32,18 +31,29 @@ class Drone:
         # Current frame captured by drone
         self.current_frame = None
         
-        #used to verify that drone is connected
+        # Verify that drone is connected
         print(self.drone.get_battery())
+
+        # Flying and running state of drone
+
+        self.running = True # Only manipulated in the outside
+        self.flying = False 
     
-    # All updates needed
+    # Each iteration of the main loop will call update_drone to give new movement commands to drone via manipulation of rc_controls list
     def update_drone(self):
         self.drone.send_rc_control(*self.rc_controls)
+
     def land_drone(self):
         self.drone.land()
+        self.flying = False
+
     def takeoff_drone(self):
         self.drone.takeoff()
+        self.flying = True
+
     def get_battery(self):
         return self.drone.get_battery()
+
     def flip_drone(self, direction):
         self.drone.flip(direction)
     
@@ -56,5 +66,3 @@ class Drone:
         pic_name = "picDrone-" + str(dt_string) +".jpg"
         imwrite(os.path.join(path, pic_name) , self.current_frame)
         print("Picture Taken")
-    
-   
