@@ -1,7 +1,7 @@
 # TelloPyController
 
 ## Introduction
-Tello Py Controller can be used to control your Tello Ryze drone in **4 modes**:
+TelloPyController can be used to control your Tello Ryze drone in **4 modes**:
 
 * Keyboard Control
   - Enables various movement and feature control of your Drone via your computer's keyboard. More info can be found inside controls.py
