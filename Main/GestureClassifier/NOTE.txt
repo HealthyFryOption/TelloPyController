@@ -1,4 +1,0 @@
-If you have changed your Neural Network's architecture during training, replace NeuralNet_DEEP.py with the newest format.
-Add your trained model's .pth parameters here as well. 
-
-Then change any information needed accordingly in Computer_Vision.py
