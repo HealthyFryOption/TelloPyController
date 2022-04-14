@@ -1,0 +1,17 @@
+According to the current COV_NET5.py CNN architecture, handCapture directory should contain 6 gesture folders:
+
+1) Palm
+2) Fist
+3) Peace
+4) Right 
+5) Left 
+6) Thumbs Up
+
+a) Use testModelTrack.py which connects to a webcam. Through hand tracking, press 'c' to take custom pictures of a gesture. View that file for more info. 
+   NOTE: YOU CAN SKIP a) IF YOU ALREADY HAVE A DATASET READY
+
+b) After collecting enough dataset images, run makeTrainingData.ipynb to create a .npy file containing the data of all images.
+
+c) Run makeModel.ipynb to train model and save your trained model's parameters in a .pth file
+
+d) run testModelTrack.py again to test the accuracy of gesture detection by pressing 't' instead of 'c' in real time. View that file for more info. 
