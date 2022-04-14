@@ -44,5 +44,6 @@ If you plan to use this repository for your own drone's test run, make sure that
 **The authors and contributors of this repository is NOT liable for ANY kinds of damages that may incur. Run at your own discretion.**
 
 ## REFERENCES
-The NN-Related directory was created with reference from YouTuber sentdex with our own modifications. Special thanks to sentdex was helping our PyTorch self-studies.
+The NN-Related directory was created with reference from YouTuber sentdex with our own modifications. Special thanks to sentdex for helping kickstart our PyTorch self-studies.
+
 Channel: https://www.youtube.com/channel/UCfzlCWGWYyIQ0aLC5w48gBQ
