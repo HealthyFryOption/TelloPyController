@@ -12,6 +12,7 @@
 
 import os
 from sys import path as sysPath
+
 os.chdir(sysPath[0])
 
 import cv2 as cv
@@ -21,7 +22,7 @@ from cvzone.HandTrackingModule import HandDetector
 
 import numpy as np
 import torch
-import GestureClassifier.NeuralNet_DEEP as NND
+import GestureClassifier.COV_NET5 as NND
 import importlib
 
 # Constants
@@ -34,25 +35,26 @@ detector = HandDetector(detectionCon=0.8, maxHands=1)
 # Reload module if there's any changes to the CNN's architecture used
 importlib.reload(NND)
 
-HAND_IMG_SIZE = NND.IMG_WIDTH
-model = NND.NeuralNet()
+IMG_WIDTH = NND.IMG_WIDTH
+IMG_HEIGHT = NND.IMG_HEIGHT
 
+model = NND.Neural()
 
-model.load_state_dict(torch.load("./GestureClassifier/poggersModel.pth", map_location=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')))
+model.load_state_dict(torch.load("./GestureClassifier/model12_D_GHT_5(8,10).pth", map_location=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')))
 model.eval()
 
-LABELS = NND.DRONE_LABELS
+LABELS = NND.CLASS_LABELS
+
 # HAND GESTURE MODEL
 
 class DrawComputer:
 
-    PADDING = 20 # padding to get hand gesture image in parseGesture()
+    PADDING = 15 # padding to get hand gesture image in parseGesture()
 
     def __init__(self):
         # Constant width and height in pixels of cv window
         self.width = 500
         self.height = 500
-    
     
     def parseGesture(self, bBox, frame):
 
@@ -65,7 +67,20 @@ class DrawComputer:
         handImg = frame[startY:endY, startX:endX]
         
         return handImg, [startX, startY, endX, endY]
+    
+    # convert to GRAYSCALED Histogram Equalized
+    def his_equ(self, read_img):
+        # convert from BGR color-space to YCrCb
+        ycrcb_img = cv.cvtColor(read_img, cv.COLOR_BGR2YCrCb)
 
+        # equalize the histogram on the Y plane
+        ycrcb_img[:, :, 0] = cv.equalizeHist(ycrcb_img[:, :, 0])
+
+        # convert back to RGB color-space from YCrCb
+        equalized_img = cv.cvtColor(ycrcb_img, cv.COLOR_YCrCb2BGR)
+        equalized_img = cv.cvtColor(equalized_img, cv.COLOR_BGR2GRAY)
+
+        return equalized_img
 
     # Take frame image and manipulate it if needed
     def update_frame(self, frame, droneState, droneBattery):
@@ -103,15 +118,23 @@ class DrawComputer:
         
         if totalTime:
             fps = 1 / totalTime
-            cv.putText(frame, f'FPS: {int(fps)}', (20,40), cv.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+            cv.putText(frame, f'FPS: {int(fps)}', (20,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
         
-        cv.putText(frame, f'Battery: {int(droneBattery)}', (20,70), cv.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+        cv.putText(frame, f'Battery: {int(droneBattery)}', (20,60), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+    
+        if droneState == "keycontrols":
+            cv.putText(frame, f'Mode: Keyboard', (20,90), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+        elif droneState == "facetrack":
+            cv.putText(frame, f'Mode: Face Tracking', (20,90), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+        elif droneState == "handtrack":
+            cv.putText(frame, f'Mode: Hand Tracking', (20,90), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+        elif droneState == "gesture":
+            cv.putText(frame, f'Mode: Gesture Tracking', (20,90), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
         
         cv.imshow("Drone Camera", frame)
         
         return dictValue
     
-
     def hand_detect(self, frame):
         bBox = []
         hands, frame = detector.findHands(frame)
@@ -138,19 +161,18 @@ class DrawComputer:
     def gesture_detect(self, frame, handImg, newBbox):
 
         # Turn it GRAYSCALE as model accepts 1 channel input only
-        handImg = cv.cvtColor(handImg, cv.COLOR_BGR2GRAY)
+        #handImg = cv.cvtColor(handImg, cv.COLOR_BGR2GRAY)
 
+        handImg = self.his_equ(handImg)
+        
         # Resize it to what has been standardized
-        handImg = cv.resize(handImg, (HAND_IMG_SIZE, HAND_IMG_SIZE))
-
-        # Turn into numpy array
-        handImg = np.array(handImg)
+        handImg = cv.resize(handImg, (IMG_HEIGHT, IMG_WIDTH))
 
         # Flatten the data
-        X = torch.Tensor(handImg).view(-1, 1, HAND_IMG_SIZE, HAND_IMG_SIZE)
+        X = torch.Tensor(handImg).view(-1, 1, IMG_HEIGHT, IMG_WIDTH)
 
         # Turn pixel values into decimals.
-        X = X/255.0 
+        X *= (1/255)
 
         # Place input inside model to get prediction
         prediction = model(X)
@@ -163,7 +185,7 @@ class DrawComputer:
         label = "UNKNOWN"
 
         # If probability of detection is more than the probability here
-        if(maxNum > 0.40):
+        if(maxNum > 0.5):
             answer = torch.argmax(prediction).item()
 
         if answer >= 0:
@@ -172,7 +194,7 @@ class DrawComputer:
         # Display current probability
         per = maxNum*100
 
-        cv.putText(frame, f"{label}: {per:.2f}%", (20, 110), cv.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
+        cv.putText(frame, f"{label}: {per:.2f}%", (20, 120), cv.FONT_HERSHEY_SIMPLEX, 0.8, (255,0,0), 2)
         cv.rectangle(frame, (newBbox[0], newBbox[1]), (newBbox[2], newBbox[3]), (255,0,0), 2)
 
         return label

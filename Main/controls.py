@@ -1,6 +1,35 @@
 '''
     Code in controls.py is responsible for all things related setting the movement control of tello drone's rc_controls list for every drone update.
     Controls can be manipulated via keyboard controls, facial tracking, hand tracking, or gesture verification.
+    
+    Control Keybinds
+
+        Changing modes:
+            1 = Keyboard Control
+            2 = Face Tracking Mode
+            3 = Hand Tracking Mode
+            4 = Gesture Recognition Mode
+        
+        Global controls:
+            Q = Takeoff
+            E = Land
+            C = Take Picture
+            Z = Start Recording
+            X = Stop Recording
+            
+        Keyboard Flight Controls:
+            W = Up
+            S = Down
+            A = Yaw Left
+            D = Yaw Right
+            Up Arrow = Pitch Forward
+            Down Arrow = Pitch Downward
+            Left Arrow = Roll Left
+            Right Arrow = Roll Right
+            I = Flip Front
+            J = Flip Left
+            K = Flip Back
+            L = Flip Right
 '''
 
 import pygame as pg
@@ -12,20 +41,22 @@ pic_previous_time = 0
 
 # Constants
 speed = 100
-gesture_speed = 20
+gesture_speed = 25
 
 # The central point is 13000 area in pixel units^2, with margin error of 3000 area pixel units^2 
 front_back_range = [10000, 16000]
 b_intended_area = 13000
 
 # Proportion Integral Derivative Controller for facial. [0] -> kp, [1] -> kd, [2] -> ki
-pid = [0.43, 0.5, 0.0005]
+#500 x 500
+pid = [0.4, 0.5, 0.0005]
 fb_pid = [0.0031, 0.0031, 0]
 
 # Proportion Integral Derivative Controller for hand. [0] -> kp, [1] -> kd, [2] -> ki
-h_ud_pid = [0.30, 0.32, 0]
-h_lr_pid = [0.18, 0.185, 0]
-h_fb_pid = [0.0025, 0.0028, 0]
+#500 x 500
+h_ud_pid = [0.30, 0.34, 0.001]
+h_lr_pid = [0.17, 0.2, 0.001]
+h_fb_pid = [0.0025, 0.0028, 00.00001]
 
 # Display W/H for PyGame window
 pg_display_width = 300
@@ -126,8 +157,7 @@ def keyboard_controls(drone, track_prop):
             elif event.key == pg.K_x:
                 drone.videoCapState = False
                 print("Drone is not / stopped Recording")
-        
-                
+             
             if drone.state == "keycontrols":
                 if event.key == pg.K_a:
                     drone.rc_controls[3] = movements["yaw_left"]
@@ -196,9 +226,9 @@ def gesture_movement(drone, gestureLabel):
         elif gestureLabel == "PEACE":
             drone.rc_controls[0] = 0
             drone.rc_controls[1] = 0
-            
             global pic_previous_time
             now = perf_counter()
+            
             # Take picture every 15 seconds a peace gesture is detected
             if (now - pic_previous_time) > 15:
                 drone.take_picture()
@@ -295,7 +325,6 @@ def track_movement(drone, tracking_prop, bBox, cv_display):
             speed = int(np.clip(speed, -35, 35))
 
             drone.rc_controls[2] = -speed
-            print("vertical speed: " + str(speed))    
             # === Vertical Control ===
         
         elif drone.state == "handtrack":
@@ -319,7 +348,7 @@ def track_movement(drone, tracking_prop, bBox, cv_display):
                 
                 # kp * error + kd * (error- pError)
                 speed = h_fb_pid[0]*b_error + h_fb_pid[1]*(b_error - tracking_prop.b_pError)
-                speed = int(np.clip(speed, -45, 45))
+                speed = int(np.clip(speed, -30, 30))
 
                 drone.rc_controls[1] = -speed 
             
@@ -331,7 +360,7 @@ def track_movement(drone, tracking_prop, bBox, cv_display):
 
             # kp * error + kd * (error- pError)
             speed = h_lr_pid[0]*h_error + h_lr_pid[1]*(h_error- tracking_prop.h_pError)
-            speed = int(np.clip(speed, -40, 40))
+            speed = int(np.clip(speed, -30, 30))
 
             drone.rc_controls[0] = speed    
             # === Horizontal Control ===
@@ -342,10 +371,9 @@ def track_movement(drone, tracking_prop, bBox, cv_display):
 
             # kp * error + kd * (error- pError)
             speed = h_ud_pid [0]*v_error + h_ud_pid [1]*(v_error- tracking_prop.v_pError)
-            speed = int(np.clip(speed, -35, 35))
+            speed = int(np.clip(speed, -30, 30))
 
-            drone.rc_controls[2] = -speed
-            print("vertical speed: " + str(speed))    
+            drone.rc_controls[2] = -speed  
             # === Vertical Control ===
 
     else:
