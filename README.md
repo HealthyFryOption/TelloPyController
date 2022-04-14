@@ -2,6 +2,8 @@
 
 This repository is made to complete our Diploma course.
 
+![alt text](https://www.newegg.com/insider/wp-content/uploads/2018/03/DJI-Tello-03257-1-1024x576.jpg)
+
 ## Introduction
 TelloPyController can be used to control your Tello Ryze drone in **4 modes**:
 
