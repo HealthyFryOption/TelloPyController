@@ -7,16 +7,8 @@
     ===================
     
     main.py is the only file to run. Contains the main while loop runner for constant connection and manipulation to the Tello Drone.
-    The program is recommended to run in Python 3.9 and above.
-
-
-    LATEST VERSION OF ESSENTIAL MODULES DURING TEST RUNS
-    PyGame - 2.0.1
-    opencv-python - 4.5.3.56
-    mediapipe - 0.8.7.3
-    cvzone - 1.5.6
-    torch - 1.11.0
-    numpy - 1.21.2
+    The program is recommended to run in Python 3.9 and above. Please pip install all necessary third-party modules as specified in requirements.txt before
+    running main.py or using NN-Related.
 '''
 
 import os
