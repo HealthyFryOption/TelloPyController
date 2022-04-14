@@ -1,5 +1,7 @@
 # TelloPyController
 
+This repository is made to complete our Diploma course.
+
 ## Introduction
 TelloPyController can be used to control your Tello Ryze drone in **4 modes**:
 
