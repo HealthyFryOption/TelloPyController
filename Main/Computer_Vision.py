@@ -171,7 +171,7 @@ class DrawComputer:
         # Flatten the data
         X = torch.Tensor(handImg).view(-1, 1, IMG_HEIGHT, IMG_WIDTH)
 
-        # Turn pixel values into decimals.
+        # Turn pixel values into decimals and into range 0-1 normalization
         X *= (1/255)
 
         # Place input inside model to get prediction
