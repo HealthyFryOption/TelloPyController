@@ -28,9 +28,9 @@ This directory contains all the necessary Python files needed for you to run a c
 
 A few notes to take into account:
 
-* You are needed to only ever needed to run main.py
+* You are needed to only ever run main.py
 * Computer_Vision.py majorly handles the drawing or classifications of frames/images, and subsequently provide necessary information. controls.py then takes in given information, such as boundary boxes around object detected or label of gesture detected to control the drone's movement. 
-* To stop execution, close the PyGame window invoked only.
+* To stop execution, close ONLY the **PyGame window** invoked.
 * The directory **GestureClassifier** is used to store the Convolutional Neural Network architecture written in PyTorch and a trained model's saved parameters, preferably in type .pth . We have not provided the parameters as it is about the storage space limit of 25mb. Thus, we encourage you to build your own via NN-Related!
 
 For more information as to how the code works, and where to customized certain values, please refer to the docstrings or comments available.
