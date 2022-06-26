@@ -1,3 +1,5 @@
 
 Main/GestureClassifier/model12_D_GHT_5(8,10).pth
 *.py
+*.pth
+*.pyc
