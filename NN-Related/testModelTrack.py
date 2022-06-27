@@ -47,14 +47,14 @@ trackGesture = False
 IMG_SIZE = NeuralNet_DEEP.IMG_WIDTH
 model = NeuralNet_DEEP.Neural()
 
-model.load_state_dict(torch.load("model.pth"))
+model.load_state_dict(torch.load("model12_D_GHT_5(8,10).pth"))
 model.eval()
 
 LABELS = NeuralNet_DEEP.CLASS_LABELS
 
 # ============== Track Gesture ==============
 
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 detector = HandDetector(detectionCon=0.8, maxHands=2)
 PADDING = 15
 
@@ -140,7 +140,7 @@ while True:
         cv.rectangle(img, (startX, startY), (endX, endY), (255,0,0), 2)
     
     # Display
-    cv.imshow("Normal Webcam", img)
+    cv.imshow("Normal Webcam", cv.resize(img, (800, 650)))
     
     key = cv.waitKey(1) 
 
