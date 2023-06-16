@@ -47,7 +47,7 @@ trackGesture = False
 IMG_SIZE = NeuralNet_DEEP.IMG_WIDTH
 model = NeuralNet_DEEP.Neural()
 
-model.load_state_dict(torch.load("model12_D_GHT_5(8,10).pth"))
+model.load_state_dict(torch.load("model12_D_GHT_5(8,10).pth", map_location='cpu'))
 model.eval()
 
 LABELS = NeuralNet_DEEP.CLASS_LABELS
